@@ -4,9 +4,9 @@ function TableHeader() {
   return (
     <thead className="bg-gray-300 border-t">
         <tr className="border-b border-l">
-            <th className="border-r">Name</th>
-            <th className="border-r">Job</th>
-            <th className="border-r"></th>
+            <th className="border-r px-2 py-1">Name</th>
+            <th className="border-r px-2 py-1">Job</th>
+            <th className="border-r px-2 py-1"></th>
         </tr>
     </thead>
   );
