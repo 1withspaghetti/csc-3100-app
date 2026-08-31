@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "pnpm --filter react-frontend run build && pnpm --filter react-frontend run preview"
+    "start": "pnpm --filter react-frontend run build && pnpm --filter react-frontend run preview",
+    "dev": "pnpm --filter react-frontend run dev"
   },
   "keywords": [],
   "author": "",
@@ -19,9 +20,5 @@
   "type": "module",
   "workspaces": [
     "packages/*"
-  ],
-  "dependencies": {
-    "@tailwindcss/vite": "^4.3.3",
-    "tailwindcss": "^4.3.3"
-  }
+  ]
 }
