@@ -16,12 +16,15 @@ const findUserByName = (name: string) => {
 
 app.get("/users", (req, res) => {
     const name = req.query.name;
+    const job = req.query.job;
+    let results = users.users_list;
     if (name != undefined && typeof name == "string") {
-        let result = findUserByName(name);
-        res.send({ users_list: result });
-    } else {
-        res.send(users);
+        results = results.filter((user) => user["name"] === name)
     }
+    if (job != undefined && typeof job == "string") {
+        results = results.filter((user) => user["job"] === job)
+    }
+    res.send({ users_list: results });
 });
 
 const findUserById = (id: string) =>
@@ -47,6 +50,14 @@ app.post("/users", (req, res) => {
     addUser(userToAdd);
     res.send();
 });
+
+app.delete("/users/:id", (req, res) => {
+    const id = req.params["id"];
+    const index = users.users_list.findIndex((user) => user.id == id);
+    if (index == -1) return res.status(404).send({ message: "Not found" })
+    users.users_list.splice(index, 1);
+    res.send()
+})
 
 app.listen(port, () => {
     console.log(`App listening at http://localhost:${port}`);
