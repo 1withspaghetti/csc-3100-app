@@ -14,7 +14,8 @@
   "type": "module",
   "dependencies": {
     "cors": "^2.8.6",
-    "express": "^5.2.1"
+    "express": "^5.2.1",
+    "nanoid": "^6.0.1"
   },
   "devDependencies": {
     "@tsconfig/node-ts": "^23.6.4",

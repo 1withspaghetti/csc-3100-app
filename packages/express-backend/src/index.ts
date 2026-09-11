@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import { users } from "./users/users.ts";
+import { nanoid } from 'nanoid'
 
 const app = express();
 const port = 8000;
@@ -45,7 +46,10 @@ const addUser = (user: typeof users.users_list[0]) => {
 
 app.post("/users", (req, res) => {
     const userToAdd = req.body;
-    addUser(userToAdd);
+    addUser({
+        ...userToAdd,
+        id: nanoid()
+    });
     res.status(201).send();
 });
 
