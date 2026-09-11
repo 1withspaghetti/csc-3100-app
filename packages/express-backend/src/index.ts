@@ -46,11 +46,12 @@ const addUser = (user: typeof users.users_list[0]) => {
 
 app.post("/users", (req, res) => {
     const userToAdd = req.body;
-    addUser({
+    const user = {
         ...userToAdd,
         id: nanoid()
-    });
-    res.status(201).send();
+    }
+    addUser(user);
+    res.status(201).send(user);
 });
 
 app.delete("/users/:id", (req, res) => {
