@@ -1,18 +1,16 @@
 import express from "express";
+import cors from "cors";
 import { users } from "./users/users.ts";
 
 const app = express();
 const port = 8000;
 
 app.use(express.json());
+app.use(cors());
 
 app.get("/", (req, res) => {
     res.send("Hello World!");
 });
-
-const findUserByName = (name: string) => {
-  return users["users_list"].filter((user) => user["name"] === name);
-};
 
 app.get("/users", (req, res) => {
     const name = req.query.name;
