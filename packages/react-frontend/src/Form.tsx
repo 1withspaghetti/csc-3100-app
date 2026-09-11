@@ -1,8 +1,8 @@
 import { useState, type ChangeEvent } from "react";
-import type { Character } from "./types";
+import type { NewCharacter } from "./types";
 
-function Form(props: { handleSubmit: (character: Character) => void }) {
-    const [person, setPerson] = useState<Character>({
+function Form(props: { handleSubmit: (character: NewCharacter) => void }) {
+    const [person, setPerson] = useState<NewCharacter>({
         name: "",
         job: "",
     });

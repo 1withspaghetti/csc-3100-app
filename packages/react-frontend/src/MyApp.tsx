@@ -1,25 +1,22 @@
 import { useEffect, useState } from "react";
 import Table from "./Table";
-import type { Character } from "./types";
+import type { Character, NewCharacter } from "./types";
 import Form from "./Form";
 
 function MyApp() {
     const [characters, setCharacters] = useState<Character[]>([]);
 
-    function removeOneCharacter(index: number) {
-        const updated = characters.filter((_characters, i) => {
-            return i !== index;
-        });
-        setCharacters(updated);
+    function removeOneCharacter(id: string) {
+        deleteUser(id)
+            .then(() => setCharacters(characters.filter(c => c.id != id)))
+            .catch(console.error)
     }
 
-    function updateList(person: Character) {
+    function updateList(person: NewCharacter) {
         postUser(person)
             .then((res) => res.json())
             .then((person) => setCharacters([...characters, person]))
-            .catch((error) => {
-                console.log(error);
-            });
+            .catch(console.error);
     }
 
     function fetchUsers() {
@@ -27,13 +24,21 @@ function MyApp() {
         return promise;
     }
 
-    function postUser(person: Character) {
+    function postUser(person: NewCharacter) {
         const promise = fetch("Http://localhost:8000/users", {
             method: "POST",
             headers: {
-            "Content-Type": "application/json",
+                "Content-Type": "application/json",
             },
             body: JSON.stringify(person),
+        });
+
+        return promise;
+    }
+
+    function deleteUser(id: string) {
+        const promise = fetch(`Http://localhost:8000/users/${id}`, {
+            method: "DELETE",
         });
 
         return promise;
@@ -43,9 +48,7 @@ function MyApp() {
         fetchUsers()
             .then((res) => res.json())
             .then((json) => setCharacters(json["users_list"]))
-            .catch((error) => {
-                console.log(error);
-            });
+            .catch(console.error);
     }, []);
 
     return (
