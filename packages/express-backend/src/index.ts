@@ -46,7 +46,7 @@ const addUser = (user: typeof users.users_list[0]) => {
 app.post("/users", (req, res) => {
     const userToAdd = req.body;
     addUser(userToAdd);
-    res.send();
+    res.status(201).send();
 });
 
 app.delete("/users/:id", (req, res) => {
