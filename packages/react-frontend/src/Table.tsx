@@ -6,6 +6,7 @@ function TableHeader() {
         <tr className="border-b border-l">
             <th className="border-r px-2 py-1">Name</th>
             <th className="border-r px-2 py-1">Job</th>
+            <th className="border-r px-2 py-1">ID</th>
             <th className="border-r px-2 py-1"></th>
         </tr>
     </thead>
@@ -18,6 +19,7 @@ function TableBody(props: { characterData: Character[], removeCharacter: (id: st
             <tr key={index} className="border-b border-l">
                 <td className="border-r px-2 py-1">{row.name}</td>
                 <td className="border-r px-2 py-1">{row.job}</td>
+                <td className="border-r px-2 py-1">{row.id}</td>
                 <td className="border-r px-2 py-1">
                     <button className="text-red-400 hover:text-red-500 hover:underline cursor-pointer p-1 transition" onClick={() => props.removeCharacter(row.id)}>Delete</button>
                 </td>
