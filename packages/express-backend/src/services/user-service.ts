@@ -1,4 +1,4 @@
-import express from "express";
+import express, { type ErrorRequestHandler } from "express";
 import { User, type IUser } from "../models/user.ts";
 
 const router = express.Router();
@@ -41,5 +41,10 @@ router.delete("/:id", async (req, res) => {
     if (result == null) return res.status(404).send({ message: "Not found" });
     res.send()
 });
+
+router.use(((err, req, res, next) => {
+  console.error(err);
+  res.status(500).send({ message: "Internal Error" });
+}) as ErrorRequestHandler);
 
 export default router;
