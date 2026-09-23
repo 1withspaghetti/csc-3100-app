@@ -4,5 +4,5 @@ export type NewCharacter = {
 }
 
 export type Character = NewCharacter & {
-    id: string
+    _id: string
 }

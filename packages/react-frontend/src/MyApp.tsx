@@ -6,9 +6,9 @@ import Form from "./Form";
 function MyApp() {
     const [characters, setCharacters] = useState<Character[]>([]);
 
-    function removeOneCharacter(id: string) {
-        deleteUser(id)
-            .then(() => setCharacters(characters.filter(c => c.id != id)))
+    function removeOneCharacter(_id: string) {
+        deleteUser(_id)
+            .then(() => setCharacters(characters.filter(c => c._id != _id)))
             .catch(console.error)
     }
 
@@ -36,8 +36,8 @@ function MyApp() {
         return promise;
     }
 
-    function deleteUser(id: string) {
-        const promise = fetch(`Http://localhost:8000/users/${id}`, {
+    function deleteUser(_id: string) {
+        const promise = fetch(`Http://localhost:8000/users/${_id}`, {
             method: "DELETE",
         });
 

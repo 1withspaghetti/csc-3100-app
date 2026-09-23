@@ -13,15 +13,15 @@ function TableHeader() {
   );
 }
 
-function TableBody(props: { characterData: Character[], removeCharacter: (id: string) => void }) {
+function TableBody(props: { characterData: Character[], removeCharacter: (_id: string) => void }) {
     const rows = props.characterData.map((row, index) => {
         return (
             <tr key={index} className="border-b border-l">
                 <td className="border-r px-2 py-1">{row.name}</td>
                 <td className="border-r px-2 py-1">{row.job}</td>
-                <td className="border-r px-2 py-1">{row.id}</td>
+                <td className="border-r px-2 py-1">{row._id}</td>
                 <td className="border-r px-2 py-1">
-                    <button className="text-red-400 hover:text-red-500 hover:underline cursor-pointer p-1 transition" onClick={() => props.removeCharacter(row.id)}>Delete</button>
+                    <button className="text-red-400 hover:text-red-500 hover:underline cursor-pointer p-1 transition" onClick={() => props.removeCharacter(row._id)}>Delete</button>
                 </td>
             </tr>
         );
@@ -34,7 +34,7 @@ function TableBody(props: { characterData: Character[], removeCharacter: (id: st
     );
 }
 
-function Table(props: { characterData: Character[], removeCharacter: (id: string) => void }) {
+function Table(props: { characterData: Character[], removeCharacter: (_id: string) => void }) {
     return (
       <table>
         <TableHeader />
