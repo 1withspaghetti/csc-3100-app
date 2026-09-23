@@ -1,19 +1,10 @@
 import express from "express";
-import cors from "cors";
-import { users } from "./users/users.ts";
-import { nanoid } from 'nanoid'
+import { users } from "./users.ts";
+import { nanoid } from "nanoid";
 
-const app = express();
-const port = 8000;
+const router = express.Router();
 
-app.use(express.json());
-app.use(cors());
-
-app.get("/", (req, res) => {
-    res.send("Hello World!");
-});
-
-app.get("/users", (req, res) => {
+router.get("/users", (req, res) => {
     const name = req.query.name;
     const job = req.query.job;
     let results = users.users_list;
@@ -29,7 +20,7 @@ app.get("/users", (req, res) => {
 const findUserById = (id: string) =>
     users["users_list"].find((user) => user["id"] === id);
 
-app.get("/users/:id", (req, res) => {
+router.get("/users/:id", (req, res) => {
     const id = req.params["id"]; //or req.params.id
     let result = findUserById(id);
     if (result === undefined) {
@@ -44,7 +35,7 @@ const addUser = (user: typeof users.users_list[0]) => {
     return user;
 };
 
-app.post("/users", (req, res) => {
+router.post("/users", (req, res) => {
     const userToAdd = req.body;
     const user = {
         ...userToAdd,
@@ -54,14 +45,12 @@ app.post("/users", (req, res) => {
     res.status(201).send(user);
 });
 
-app.delete("/users/:id", (req, res) => {
+router.delete("/users/:id", (req, res) => {
     const id = req.params["id"];
     const index = users.users_list.findIndex((user) => user.id == id);
     if (index == -1) return res.status(404).send({ message: "Not found" })
     users.users_list.splice(index, 1);
     res.send()
-})
-
-app.listen(port, () => {
-    console.log(`App listening at http://localhost:${port}`);
 });
+
+export default router;
