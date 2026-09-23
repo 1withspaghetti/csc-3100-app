@@ -22,7 +22,7 @@ app.get("/", (req, res) => {
     res.send("Hello World!");
 });
 
-app.use("/user", userService)
+app.use("/users", userService)
 
 app.listen(port, () => {
     console.log(`App listening at http://localhost:${port}`);

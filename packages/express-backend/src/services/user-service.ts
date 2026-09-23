@@ -1,55 +1,44 @@
 import express from "express";
-import { users } from "./users.ts";
-import { nanoid } from "nanoid";
+import { User, type IUser } from "../models/user.ts";
 
 const router = express.Router();
 
-router.get("/users", (req, res) => {
+router.get("/", async (req, res) => {
     const name = req.query.name;
     const job = req.query.job;
-    let results = users.users_list;
+
+    let query: Partial<IUser> = {};
     if (name != undefined && typeof name == "string") {
-        results = results.filter((user) => user["name"] === name)
+        query.name = name;
     }
     if (job != undefined && typeof job == "string") {
-        results = results.filter((user) => user["job"] === job)
+        query.job = job;
     }
-    res.send({ users_list: results });
+
+    const users = await User.find(query)
+    res.send({ users_list: users.map(u => u.toObject()) });
 });
 
-const findUserById = (id: string) =>
-    users["users_list"].find((user) => user["id"] === id);
-
-router.get("/users/:id", (req, res) => {
+router.get("/:id", async (req, res) => {
     const id = req.params["id"]; //or req.params.id
-    let result = findUserById(id);
-    if (result === undefined) {
+
+    const user = await User.findById(id);
+    if (user === null) {
         res.status(404).send({ message: "Resource not found." });
     } else {
-        res.send(result);
+        res.send(user.toObject());
     }
 });
 
-const addUser = (user: typeof users.users_list[0]) => {
-    users["users_list"].push(user);
-    return user;
-};
-
-router.post("/users", (req, res) => {
-    const userToAdd = req.body;
-    const user = {
-        ...userToAdd,
-        id: nanoid()
-    }
-    addUser(user);
-    res.status(201).send(user);
+router.post("/", async (req, res) => {
+    const user = await new User(req.body).save();
+    res.status(201).send(user.toObject());
 });
 
-router.delete("/users/:id", (req, res) => {
+router.delete("/:id", async (req, res) => {
     const id = req.params["id"];
-    const index = users.users_list.findIndex((user) => user.id == id);
-    if (index == -1) return res.status(404).send({ message: "Not found" })
-    users.users_list.splice(index, 1);
+    const result = await User.findByIdAndDelete(id);
+    if (result == null) return res.status(404).send({ message: "Not found" });
     res.send()
 });
 
